@@ -1,0 +1,76 @@
+#include <stdio.h>
+
+void Merge(int arr[], int s, int m, int e) {    //s=start, m=mid, e=end
+
+  int l1 = m - s + 1;
+  int l2 = e - m;
+
+  int lArr[l1], rArr[l2];
+
+  for (int i = 0; i < l1; i++)
+    lArr[i] = arr[s + i];
+  for (int j = 0; j < l2; j++)
+    rArr[j] = arr[m + 1 + j];
+
+  int i, j, k;
+  i = 0;
+  j = 0;
+  k = s;
+
+  while (i < l1 && j < l2) {
+    if (lArr[i] <= rArr[j]) {
+      arr[k] = lArr[i];
+      i++;
+    } else {
+      arr[k] = rArr[j];
+      j++;
+    }
+    k++;
+  }
+
+  while (i < l1) {
+    arr[k] = lArr[i];
+    i++;
+    k++;
+  }
+
+  while (j < l2) {
+    arr[k] = rArr[j];
+    j++;
+    k++;
+  }
+}
+
+void MergeSort(int arr[], int s, int e) {
+  if (s < e) {
+
+    int m = s + (e - s) / 2;
+    MergeSort(arr, s, m);
+    MergeSort(arr, m + 1, e);
+    Merge(arr, s, m, e);
+  }
+}
+
+void display(int arr[], int l) {
+  for (int i = 0; i < l; i++)
+    printf("%d ", arr[i]);
+  printf("\n");
+}
+
+int main() {
+     int n=8;
+
+    int arr[n];
+    printf("Enter the elements of array: \n");
+    for (int i = 0; i < n; i++)
+    {
+        scanf("%d", &arr[i]);
+    }
+ 
+  display(arr, n);
+  
+  MergeSort(arr, 0, n - 1);
+
+  printf("Sorted array\n");
+  display(arr, n);
+}
